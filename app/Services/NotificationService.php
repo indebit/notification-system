@@ -7,13 +7,13 @@ namespace App\Services;
 use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
 use App\Enums\NotificationStatus;
+use App\Jobs\SendNotificationJob;
 use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use App\Jobs\SendNotificationJob;
 
 class NotificationService
 {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\BatchNotificationRequest;
 use App\Http\Requests\ListNotificationsRequest;
 use App\Http\Requests\StoreNotificationRequest;
@@ -19,7 +18,6 @@ class NotificationController extends Controller
 {
     public function __construct(public NotificationService $notificationService) {}
 
-
     public function store(StoreNotificationRequest $request): JsonResponse
     {
         $notification = $this->notificationService->create($request->validated());
@@ -28,7 +26,6 @@ class NotificationController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
-
 
     public function storeBatch(BatchNotificationRequest $request): JsonResponse
     {
@@ -40,14 +37,12 @@ class NotificationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-
     public function show(Notification $notification): NotificationResource
     {
         $notification->load('logs');
 
         return new NotificationResource($notification);
     }
-
 
     public function showBatch(string $batchId): NotificationCollection
     {
@@ -59,14 +54,12 @@ class NotificationController extends Controller
         return new NotificationCollection($notifications);
     }
 
-
     public function cancel(Notification $notification): NotificationResource
     {
         return new NotificationResource(
             $this->notificationService->cancel($notification),
         );
     }
-
 
     public function index(ListNotificationsRequest $request): NotificationCollection
     {

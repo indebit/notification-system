@@ -21,6 +21,7 @@
 /public/vendor/scribe/
 /storage/*.key
 /storage/pail
+/storage/phpstan
 /vendor
 _ide_helper.php
 Homestead.json

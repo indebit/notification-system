@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Enums\NotificationStatus;
 use App\Enums\NotificationLogStatus;
+use App\Enums\NotificationStatus;
 use App\Events\NotificationStatusChanged;
 use App\Models\Notification;
 use App\Models\NotificationLog;
@@ -126,9 +126,6 @@ class DeliveryService
 
     /**
      * Calculate the latency in milliseconds.
-     *
-     * @param  float  $start
-     * @return int
      */
     private function latencyMs(float $start): int
     {
@@ -137,9 +134,6 @@ class DeliveryService
 
     /**
      * Convert provider error payloads to safe string values.
-     *
-     * @param  mixed  $error
-     * @return string
      */
     private function stringifyError(mixed $error): string
     {
