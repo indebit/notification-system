@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
 use App\Enums\NotificationStatus;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class Notification extends Model
 {
@@ -40,6 +43,43 @@ class Notification extends Model
             'delivered_at' => 'datetime',
             'failed_at' => 'datetime',
         ];
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(NotificationLog::class);
+    }
+
+    public function scopeByStatus(Builder $query, NotificationStatus $status): Builder
+    {
+        return $query->where('status', $status->value);
+    }
+
+    public function scopeByChannel(Builder $query, NotificationChannel $channel): Builder
+    {
+        return $query->where('channel', $channel->value);
+    }
+
+    public function scopeByDateRange(Builder $query, ?Carbon $from, ?Carbon $to): Builder
+    {
+        if ($from !== null) {
+            $query->where('created_at', '>=', $from);
+        }
+
+        if ($to !== null) {
+            $query->where('created_at', '<=', $to);
+        }
+
+        return $query;
+    }
+
+    public function scopeByBatchId(Builder $query, ?string $batchId): Builder
+    {
+        if ($batchId === null) {
+            return $query;
+        }
+
+        return $query->where('batch_id', $batchId);
     }
 
 }
