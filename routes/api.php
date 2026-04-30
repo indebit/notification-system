@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ObservabilityController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/metrics', [ObservabilityController::class, 'metrics'])->name('observability.metrics');
+Route::get('/health', [ObservabilityController::class, 'health'])->name('observability.health');
 
 Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function (): void {
     Route::post('/', [NotificationController::class, 'store'])->name('store');
