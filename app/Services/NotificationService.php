@@ -13,6 +13,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Jobs\SendNotificationJob;
 
 class NotificationService
 {
@@ -34,7 +35,7 @@ class NotificationService
             'priority' => $notificationValidatedData['priority'] ?? NotificationPriority::Normal,
         ]);
 
-        // TODO: Dispatch the notification job here
+        SendNotificationJob::dispatch($notification)->onQueue($this->queueName($notification->priority));
 
         return $notification;
     }
@@ -91,5 +92,14 @@ class NotificationService
             ->orderByDesc('created_at');
 
         return $query->paginate($perPage)->withQueryString();
+    }
+
+    private function queueName(NotificationPriority $priority): string
+    {
+        return match ($priority) {
+            NotificationPriority::High => 'high',
+            NotificationPriority::Low => 'low',
+            NotificationPriority::Normal => 'default',
+        };
     }
 }

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'notification_provider' => [
+        'url' => env('NOTIFICATION_PROVIDER_URL', 'https://webhook.site/your-uuid'),
+        'timeout' => env('NOTIFICATION_PROVIDER_TIMEOUT', 10),
+        'connect_timeout' => env('NOTIFICATION_PROVIDER_CONNECT_TIMEOUT', 5),
+    ],
+
 ];
