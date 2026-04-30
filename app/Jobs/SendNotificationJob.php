@@ -14,6 +14,7 @@ use Illuminate\Queue\Attributes\Backoff;
 use Illuminate\Queue\Attributes\MaxExceptions;
 use Illuminate\Queue\Attributes\Timeout;
 use Illuminate\Queue\Attributes\Tries;
+use Illuminate\Support\Facades\Log;
 
 #[Tries(5)]
 #[Backoff(5, 30, 120, 600)]
@@ -36,7 +37,21 @@ class SendNotificationJob implements ShouldQueue
             return;
         }
 
+        Log::shareContext([
+            'correlation_id' => $notification->id,
+            'channel' => $notification->channel->value,
+        ]);
+
+        Log::info('Notification job processing started.', [
+            'notification_id' => $notification->id,
+            'priority' => $notification->priority->value,
+        ]);
+
         $deliveryService->deliver($notification);
+
+        Log::info('Notification delivery completed successfully.', [
+            'notification_id' => $notification->id,
+        ]);
     }
 
     private function queueName(NotificationPriority $priority): string

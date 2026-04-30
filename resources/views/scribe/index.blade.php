@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost:8000";
+        var tryItOutBaseUrl = "http://notification-system-api.test";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -109,7 +109,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: <code>http://notification-system-api.test</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -136,7 +136,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/notifications" \
+    "http://notification-system-api.test/api/notifications" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -151,7 +151,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications"
+    "http://notification-system-api.test/api/notifications"
 );
 
 const headers = {
@@ -328,7 +328,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/notifications/batch" \
+    "http://notification-system-api.test/api/notifications/batch" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -347,7 +347,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications/batch"
+    "http://notification-system-api.test/api/notifications/batch"
 );
 
 const headers = {
@@ -540,13 +540,13 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/notifications" \
+    --get "http://notification-system-api.test/api/notifications" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"status\": \"architecto\",
     \"channel\": \"architecto\",
-    \"from\": \"2026-04-30T10:15:58\",
+    \"from\": \"2026-04-30T10:32:46\",
     \"to\": \"2052-05-23\",
     \"per_page\": 22,
     \"batch_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\"
@@ -556,7 +556,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications"
+    "http://notification-system-api.test/api/notifications"
 );
 
 const headers = {
@@ -567,7 +567,7 @@ const headers = {
 let body = {
     "status": "architecto",
     "channel": "architecto",
-    "from": "2026-04-30T10:15:58",
+    "from": "2026-04-30T10:32:46",
     "to": "2052-05-23",
     "per_page": 22,
     "batch_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
@@ -714,10 +714,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="from"                data-endpoint="GETapi-notifications"
-               value="2026-04-30T10:15:58"
+               value="2026-04-30T10:32:46"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-04-30T10:15:58</code></p>
+<p>Must be a valid date. Example: <code>2026-04-30T10:32:46</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
@@ -770,14 +770,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/notifications/batch/architecto" \
+    --get "http://notification-system-api.test/api/notifications/batch/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications/batch/architecto"
+    "http://notification-system-api.test/api/notifications/batch/architecto"
 );
 
 const headers = {
@@ -809,8 +809,8 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [],
     &quot;links&quot;: {
-        &quot;first&quot;: &quot;http://localhost:8000/api/notifications/batch/architecto?page=1&quot;,
-        &quot;last&quot;: &quot;http://localhost:8000/api/notifications/batch/architecto?page=1&quot;,
+        &quot;first&quot;: &quot;http://notification-system-api.test/api/notifications/batch/architecto?page=1&quot;,
+        &quot;last&quot;: &quot;http://notification-system-api.test/api/notifications/batch/architecto?page=1&quot;,
         &quot;prev&quot;: null,
         &quot;next&quot;: null
     },
@@ -826,7 +826,7 @@ access-control-allow-origin: *
                 &quot;active&quot;: false
             },
             {
-                &quot;url&quot;: &quot;http://localhost:8000/api/notifications/batch/architecto?page=1&quot;,
+                &quot;url&quot;: &quot;http://notification-system-api.test/api/notifications/batch/architecto?page=1&quot;,
                 &quot;label&quot;: &quot;1&quot;,
                 &quot;page&quot;: 1,
                 &quot;active&quot;: true
@@ -838,7 +838,7 @@ access-control-allow-origin: *
                 &quot;active&quot;: false
             }
         ],
-        &quot;path&quot;: &quot;http://localhost:8000/api/notifications/batch/architecto&quot;,
+        &quot;path&quot;: &quot;http://notification-system-api.test/api/notifications/batch/architecto&quot;,
         &quot;per_page&quot;: 15,
         &quot;to&quot;: null,
         &quot;total&quot;: 0
@@ -945,14 +945,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5" \
+    --get "http://notification-system-api.test/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5"
+    "http://notification-system-api.test/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5"
 );
 
 const headers = {
@@ -1103,14 +1103,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5/cancel" \
+    "http://notification-system-api.test/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5/cancel" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5/cancel"
+    "http://notification-system-api.test/api/notifications/019ddd49-4700-70ec-a210-b83f311f1ca5/cancel"
 );
 
 const headers = {
