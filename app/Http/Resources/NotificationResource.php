@@ -25,6 +25,7 @@ class NotificationResource extends JsonResource
             'priority' => $this->priority?->value ?? $this->priority,
             'status' => $this->status?->value ?? $this->status,
             'idempotency_key' => $this->idempotency_key,
+            'scheduled_at' => $this->scheduled_at?->toIso8601String(),
             'processing_started_at' => $this->processing_started_at?->toIso8601String(),
             'delivered_at' => $this->delivered_at?->toIso8601String(),
             'failed_at' => $this->failed_at?->toIso8601String(),

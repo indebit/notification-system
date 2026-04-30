@@ -25,6 +25,7 @@ class BatchNotificationRequest extends FormRequest
             'notifications.*.content' => ['required', 'string', $this->contentLengthRule()],
             'notifications.*.priority' => ['sometimes', 'string', Rule::enum(NotificationPriority::class)],
             'notifications.*.idempotency_key' => ['sometimes', 'string', 'max:100'],
+            'notifications.*.scheduled_at' => ['sometimes', 'date', 'after_or_equal:now'],
         ];
     }
 

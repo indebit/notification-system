@@ -35,7 +35,9 @@ class NotificationService
             'priority' => $notificationValidatedData['priority'] ?? NotificationPriority::Normal,
         ]);
 
-        SendNotificationJob::dispatch($notification)->onQueue($this->queueName($notification->priority));
+        if ($notification->scheduled_at === null) {
+            SendNotificationJob::dispatch($notification)->onQueue($this->queueName($notification->priority));
+        }
 
         return $notification;
     }
