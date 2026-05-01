@@ -66,6 +66,16 @@
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
                             </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-test-broadcast">
+                                <a href="#endpoints-POSTapi-test-broadcast">Debug-only: trigger a sample NotificationStatusChanged broadcast (see README).</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-notifications" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="notifications">
                     <a href="#notifications">Notifications</a>
@@ -129,7 +139,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: April 30, 2026</li>
+        <li>Last updated: May 1, 2026</li>
     </ul>
 </div>
 
@@ -149,7 +159,122 @@ You can switch the language used with the tabs at the top right (or from the nav
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id="notifications">Notifications</h1>
+        <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-POSTapi-test-broadcast">Debug-only: trigger a sample NotificationStatusChanged broadcast (see README).</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-test-broadcast">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://notification-system-api.test/api/test/broadcast" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://notification-system-api.test/api/test/broadcast"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-test-broadcast">
+</span>
+<span id="execution-results-POSTapi-test-broadcast" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-test-broadcast"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-test-broadcast"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-test-broadcast" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-test-broadcast">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-test-broadcast" data-method="POST"
+      data-path="api/test/broadcast"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-test-broadcast', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-test-broadcast"
+                    onclick="tryItOut('POSTapi-test-broadcast');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-test-broadcast"
+                    onclick="cancelTryOut('POSTapi-test-broadcast');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-test-broadcast"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/test/broadcast</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-test-broadcast"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-test-broadcast"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="notifications">Notifications</h1>
 
     
 
@@ -700,8 +825,8 @@ date range, and batch ID.</p>
     --data "{
     \"status\": \"architecto\",
     \"channel\": \"architecto\",
-    \"from\": \"2026-04-30T22:38:55\",
-    \"to\": \"2052-05-23\",
+    \"from\": \"2026-05-01T09:57:30\",
+    \"to\": \"2052-05-24\",
     \"per_page\": 22,
     \"batch_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\"
 }"
@@ -732,8 +857,8 @@ const headers = {
 let body = {
     "status": "architecto",
     "channel": "architecto",
-    "from": "2026-04-30T22:38:55",
-    "to": "2052-05-23",
+    "from": "2026-05-01T09:57:30",
+    "to": "2052-05-24",
     "per_page": 22,
     "batch_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
 };
@@ -963,10 +1088,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="from"                data-endpoint="GETapi-notifications"
-               value="2026-04-30T22:38:55"
+               value="2026-05-01T09:57:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-04-30T22:38:55</code></p>
+<p>Must be a valid date. Example: <code>2026-05-01T09:57:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
@@ -975,10 +1100,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="to"                data-endpoint="GETapi-notifications"
-               value="2052-05-23"
+               value="2052-05-24"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from</code>. Example: <code>2052-05-23</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from</code>. Example: <code>2052-05-24</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
@@ -2061,7 +2186,7 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-x-correlation-id: 5e908adf-c916-4667-8052-8f4469755663
+x-correlation-id: c3732a13-2140-4277-ac42-66b83de44c66
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -2249,7 +2374,7 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-x-correlation-id: 496c60a3-61c2-4d23-8a5f-261716488441
+x-correlation-id: 8028eb4b-a6c4-4663-a4a8-0a824afdb028
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 

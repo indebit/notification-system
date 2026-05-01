@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationStatus;
+use App\Events\NotificationStatusChanged;
 use App\Http\Requests\BatchNotificationRequest;
 use App\Http\Requests\ListNotificationsRequest;
 use App\Http\Requests\StoreNotificationRequest;
@@ -18,6 +20,27 @@ class NotificationController extends Controller
 {
     public function __construct(public NotificationService $notificationService) {}
 
+    /**
+     * Debug-only: trigger a sample NotificationStatusChanged broadcast (see README).
+     */
+    public function testBroadcast(): JsonResponse
+    {
+        $notification = Notification::query()->latest()->first();
+        if ($notification) {
+            broadcast(new NotificationStatusChanged(
+                $notification,
+                NotificationStatus::Pending,
+                NotificationStatus::Delivered
+            ));
+
+            return response()->json([
+                'message' => 'Broadcast sent',
+                'notification' => $notification,
+            ], Response::HTTP_OK);
+        }
+
+        return response()->json(['message' => 'No notifications found'], Response::HTTP_NOT_FOUND)->setStatusCode(Response::HTTP_NOT_FOUND);
+    }
 
     /**
      * Create a notification
@@ -116,7 +139,6 @@ class NotificationController extends Controller
         return new NotificationCollection($notifications);
     }
 
-
     /**
      * Cancel a notification
      *
@@ -135,7 +157,6 @@ class NotificationController extends Controller
             $this->notificationService->cancel($notification),
         );
     }
-
 
     /**
      * List notifications
