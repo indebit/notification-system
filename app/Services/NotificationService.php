@@ -17,6 +17,8 @@ use Illuminate\Validation\ValidationException;
 
 class NotificationService
 {
+    public function __construct(private TemplateService $templateService) {}
+
     public function create(array $notificationValidatedData): Notification
     {
         $idempotencyKey = $notificationValidatedData['idempotency_key'] ?? null;
@@ -27,6 +29,14 @@ class NotificationService
             if ($existingNotification instanceof Notification) {
                 return $existingNotification;
             }
+        }
+
+        if (isset($notificationValidatedData['template_name'])) {
+            $notificationValidatedData['content'] = $this->templateService->render(
+                (string) $notificationValidatedData['template_name'],
+                (array) ($notificationValidatedData['template_variables'] ?? []),
+                NotificationChannel::from((string) $notificationValidatedData['channel']),
+            );
         }
 
         $notification = Notification::create([

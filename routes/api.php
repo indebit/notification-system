@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ObservabilityController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/metrics', [ObservabilityController::class, 'metrics'])->name('observability.metrics');
@@ -14,4 +15,10 @@ Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function (
     Route::get('/batch/{batchId}', [NotificationController::class, 'showBatch'])->name('show.batch');
     Route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
     Route::patch('/{notification}/cancel', [NotificationController::class, 'cancel'])->name('cancel');
+});
+
+Route::group(['prefix' => 'templates', 'as' => 'templates.'], function (): void {
+    Route::post('/', [TemplateController::class, 'store'])->name('templates.store');
+    Route::get('/', [TemplateController::class, 'index'])->name('templates.index');
+    Route::get('/{template}', [TemplateController::class, 'show'])->name('templates.show');
 });

@@ -8,6 +8,7 @@ use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class BatchNotificationRequest extends FormRequest
 {
@@ -26,6 +27,8 @@ class BatchNotificationRequest extends FormRequest
             'notifications.*.priority' => ['sometimes', 'string', Rule::enum(NotificationPriority::class)],
             'notifications.*.idempotency_key' => ['sometimes', 'string', 'max:100'],
             'notifications.*.scheduled_at' => ['sometimes', 'date', 'after_or_equal:now'],
+            'notifications.*.template_name' => ['sometimes', 'string', Rule::exists('notification_templates', 'name')],
+            'notifications.*.template_variables' => ['sometimes', 'array'],
         ];
     }
 
@@ -68,5 +71,27 @@ class BatchNotificationRequest extends FormRequest
                 $fail("The {$attribute} field may not be greater than {$maxLength} characters for the selected channel.");
             }
         };
+    }
+
+    // Check if both content and template_name are not present when template_variables are present
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                foreach ($this->input('notifications', []) as $index => $notification) {
+                    $hasContent = isset($notification['content']) && is_string($notification['content']) && $notification['content'] !== '';
+                    $hasTemplate = isset($notification['template_name']) && is_string($notification['template_name']) && $notification['template_name'] !== '';
+                    $hasVariables = isset($notification['template_variables']) && is_array($notification['template_variables']);
+
+                    if (! $hasContent && ! $hasTemplate) {
+                        $validator->errors()->add("notifications.{$index}.content", 'The content field is required when template_name is not present.');
+                    }
+
+                    if ($hasTemplate && ! $hasVariables) {
+                        $validator->errors()->add("notifications.{$index}.template_variables", 'The template_variables field is required when template_name is present.');
+                    }
+                }
+            },
+        ];
     }
 }

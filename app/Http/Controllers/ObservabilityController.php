@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Services\HealthService;
 use App\Services\MetricsService;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +15,6 @@ class ObservabilityController extends Controller
         public MetricsService $metricsService,
         public HealthService $healthService,
     ) {}
-
 
     /**
      * Get queue and delivery metrics
@@ -33,7 +31,6 @@ class ObservabilityController extends Controller
         return response()->json($this->metricsService->getMetrics());
     }
 
-    
     /**
      * Get service health status
      *

@@ -8,6 +8,7 @@ use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class StoreNotificationRequest extends FormRequest
 {
@@ -25,6 +26,8 @@ class StoreNotificationRequest extends FormRequest
             'priority' => ['sometimes', 'string', Rule::enum(NotificationPriority::class)],
             'idempotency_key' => ['sometimes', 'string', 'max:100'],
             'scheduled_at' => ['sometimes', 'date', 'after_or_equal:now'],
+            'template_name' => ['sometimes', 'string', Rule::exists('notification_templates', 'name')],
+            'template_variables' => ['sometimes', 'array', 'required_with:template_name'],
         ];
     }
 
@@ -51,5 +54,17 @@ class StoreNotificationRequest extends FormRequest
                 $fail("The {$attribute} field may not be greater than {$maxLength} characters for the selected channel.");
             }
         };
+    }
+
+    // Check if template_variables are present when template_name is present
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                if ($this->filled('template_name') && ! $this->filled('template_variables')) {
+                    $validator->errors()->add('template_variables', 'The template_variables field is required when template_name is present.');
+                }
+            },
+        ];
     }
 }
