@@ -10,6 +10,9 @@ use Laravel\Horizon\Contracts\MasterSupervisorRepository;
 
 class HealthService
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function check(): array
     {
         $database = $this->checkDatabase();
@@ -34,6 +37,9 @@ class HealthService
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function checkDatabase(): array
     {
         $start = microtime(true);
@@ -54,6 +60,9 @@ class HealthService
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function checkRedis(): array
     {
         $start = microtime(true);
@@ -74,6 +83,9 @@ class HealthService
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function checkHorizon(): array
     {
         try {

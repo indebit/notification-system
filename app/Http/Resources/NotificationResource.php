@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Notification
+ */
 class NotificationResource extends JsonResource
 {
     /**
@@ -19,11 +23,11 @@ class NotificationResource extends JsonResource
         return [
             'id' => $this->id,
             'batch_id' => $this->batch_id,
-            'channel' => $this->channel?->value ?? $this->channel,
+            'channel' => $this->channel->value,
             'recipient' => $this->recipient,
             'content' => $this->content,
-            'priority' => $this->priority?->value ?? $this->priority,
-            'status' => $this->status?->value ?? $this->status,
+            'priority' => $this->priority->value,
+            'status' => $this->status->value,
             'idempotency_key' => $this->idempotency_key,
             'scheduled_at' => $this->scheduled_at?->toIso8601String(),
             'processing_started_at' => $this->processing_started_at?->toIso8601String(),
@@ -44,7 +48,7 @@ class NotificationResource extends JsonResource
                         'response_body' => $log->response_body,
                         'error_message' => $log->error_message,
                         'latency_ms' => $log->latency_ms,
-                        'created_at' => $log->created_at?->toIso8601String(),
+                        'created_at' => $log->created_at->toIso8601String(),
                     ])
                     ->all();
             }),

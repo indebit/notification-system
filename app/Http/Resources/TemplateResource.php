@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Models\NotificationTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin NotificationTemplate
+ */
 class TemplateResource extends JsonResource
 {
     /**
@@ -19,7 +23,7 @@ class TemplateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'channel' => $this->channel?->value ?? $this->channel,
+            'channel' => $this->channel->value,
             'body' => $this->body,
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),

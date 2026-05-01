@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -17,6 +18,9 @@ class StoreNotificationRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
@@ -57,6 +61,9 @@ class StoreNotificationRequest extends FormRequest
     }
 
     // Check if template_variables are present when template_name is present
+    /**
+     * @return array<int, callable(Validator): void>
+     */
     public function after(): array
     {
         return [

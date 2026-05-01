@@ -31,6 +31,9 @@ class SendNotificationJob implements ShouldQueue
         $this->onQueue($this->queueName($this->notification->priority));
     }
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [

@@ -21,6 +21,10 @@ beforeEach(function (): void {
     Http::fake();
 });
 
+/**
+ * @param  array<string, mixed>  $overrides
+ * @return array<string, mixed>
+ */
 function notificationPayload(array $overrides = []): array
 {
     return array_merge([
