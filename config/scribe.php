@@ -14,7 +14,7 @@ return [
     'title' => 'Notification System API Documentation',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
-    'description' => 'This documentation aims to provide all the information you need to work with our API.',
+    'description' => 'Event-driven internal notification microservice for creating, queueing, delivering, and tracking SMS, email, and push notifications at scale.',
 
     // Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
     'intro_text' => <<<'INTRO'
@@ -26,7 +26,7 @@ return [
 
     // The base URL displayed in the docs.
     // If you're using `laravel` type, you can set this to a dynamic string, like '{{ config("app.tenant_url") }}' to get a dynamic base URL.
-    'base_url' => config('app.url'),
+    'base_url' => env('APP_URL', config('app.url')),
 
     // Routes to include in the docs
     'routes' => [
@@ -68,7 +68,8 @@ return [
 
     'laravel' => [
         // Whether to automatically create a docs route for you to view your generated docs. You can still set up routing manually.
-        'add_routes' => true,
+        // Disabled: interactive docs are served at `/docs` via Swagger UI (`resources/views/docs.blade.php`).
+        'add_routes' => false,
 
         // URL path to use for the docs endpoint (if `add_routes` is true).
         // By default, `/docs` opens the HTML page, `/docs.postman` opens the Postman collection, and `/docs.openapi` the OpenAPI spec.
@@ -91,6 +92,9 @@ return [
         // Add a Try It Out button to your endpoints so consumers can test endpoints right from their browser.
         // Don't forget to enable CORS headers for your endpoints.
         'enabled' => true,
+
+        // Output path for generated OpenAPI file when using laravel docs type.
+        'output_path' => storage_path('app/private/scribe/openapi.yaml'),
 
         // The base URL to use in the API tester. Leave as null to be the same as the displayed URL (`scribe.base_url`).
         'base_url' => null,

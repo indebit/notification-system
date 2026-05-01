@@ -14,6 +14,8 @@ use Illuminate\Queue\Attributes\Backoff;
 use Illuminate\Queue\Attributes\MaxExceptions;
 use Illuminate\Queue\Attributes\Timeout;
 use Illuminate\Queue\Attributes\Tries;
+use Illuminate\Queue\Middleware\RateLimitedWithRedis;
+use Illuminate\Queue\Middleware\ThrottlesExceptionsWithRedis;
 use Illuminate\Support\Facades\Log;
 
 #[Tries(5)]
@@ -27,6 +29,14 @@ class SendNotificationJob implements ShouldQueue
     public function __construct(public Notification $notification)
     {
         $this->onQueue($this->queueName($this->notification->priority));
+    }
+
+    public function middleware(): array
+    {
+        return [
+            new RateLimitedWithRedis('channel-'.$this->notification->channel->value),
+            new ThrottlesExceptionsWithRedis(5, 60),
+        ];
     }
 
     public function handle(DeliveryService $deliveryService): void

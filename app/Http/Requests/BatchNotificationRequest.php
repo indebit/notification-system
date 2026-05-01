@@ -23,7 +23,7 @@ class BatchNotificationRequest extends FormRequest
             'notifications' => ['required', 'array', 'min:1', 'max:1000'],
             'notifications.*.recipient' => ['required', 'string', 'max:100'],
             'notifications.*.channel' => ['required', 'string', Rule::enum(NotificationChannel::class)],
-            'notifications.*.content' => ['required', 'string', $this->contentLengthRule()],
+            'notifications.*.content' => ['nullable', 'string', 'required_without:notifications.*.template_name', $this->contentLengthRule()],
             'notifications.*.priority' => ['sometimes', 'string', Rule::enum(NotificationPriority::class)],
             'notifications.*.idempotency_key' => ['sometimes', 'string', 'max:100'],
             'notifications.*.scheduled_at' => ['sometimes', 'date', 'after_or_equal:now'],

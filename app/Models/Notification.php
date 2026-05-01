@@ -15,6 +15,10 @@ class Notification extends Model
 {
     use HasUuids;
 
+    protected $keyType = 'string';
+    
+    public $incrementing = false;
+
     protected $fillable = [
         'batch_id',
         'channel',

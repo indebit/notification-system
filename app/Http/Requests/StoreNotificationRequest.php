@@ -22,7 +22,7 @@ class StoreNotificationRequest extends FormRequest
         return [
             'recipient' => ['required', 'string', 'max:100'],
             'channel' => ['required', 'string', Rule::enum(NotificationChannel::class)],
-            'content' => ['required', 'string', $this->contentLengthRule('channel')],
+            'content' => ['nullable', 'string', 'required_without:template_name', $this->contentLengthRule('channel')],
             'priority' => ['sometimes', 'string', Rule::enum(NotificationPriority::class)],
             'idempotency_key' => ['sometimes', 'string', 'max:100'],
             'scheduled_at' => ['sometimes', 'date', 'after_or_equal:now'],
