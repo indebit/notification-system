@@ -90,7 +90,7 @@ class DeliveryService
         NotificationLog::create([
             'notification_id' => $notification->id,
             'attempt_number' => $attemptNumber,
-            'status' => NotificationLogStatus::Failed,
+            'status' => NotificationLogStatus::Failed->value,
             'response_body' => $response->json(),
             'error_message' => $errorText,
             'latency_ms' => $latencyMs,
@@ -115,7 +115,7 @@ class DeliveryService
         NotificationLog::create([
             'notification_id' => $notification->id,
             'attempt_number' => $attemptNumber,
-            'status' => NotificationLogStatus::Failed,
+            'status' => NotificationLogStatus::Failed->value,
             'error_message' => $exception->getMessage(),
             'latency_ms' => $latencyMs,
             'created_at' => now(),

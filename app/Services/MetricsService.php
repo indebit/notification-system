@@ -16,6 +16,9 @@ use Laravel\Horizon\WaitTimeCalculator;
 
 class MetricsService
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function getMetrics(): array
     {
         $queueDepth = $this->queueDepth();
@@ -38,6 +41,9 @@ class MetricsService
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function queueDepth(): array
     {
         $pendingByPriority = Notification::query()
@@ -73,6 +79,9 @@ class MetricsService
         return $depth;
     }
 
+    /**
+     * @return array<string, int>
+     */
     private function notificationStatusCounts(): array
     {
         $counts = Notification::query()
@@ -89,6 +98,9 @@ class MetricsService
         ];
     }
 
+    /**
+     * @return array{total: int, delivered: int, failed: int, rate: float}
+     */
     private function successRateForWindow(Carbon $from): array
     {
         $logs = NotificationLog::query()
@@ -111,6 +123,9 @@ class MetricsService
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function latencyMetrics(): array
     {
         $from = now()->subHour();
@@ -130,9 +145,7 @@ class MetricsService
 
         $p95 = DB::table('notification_logs')
             ->where('created_at', '>=', $from)
-            ->select('latency_ms')
             ->orderBy('latency_ms')
-            ->get()
             ->pluck('latency_ms')
             ->values();
 
@@ -153,6 +166,9 @@ class MetricsService
         ];
     }
 
+    /**
+     * @return array{per_minute: float, window_minutes: int}
+     */
     private function throughputMetrics(): array
     {
         $windowMinutes = 5;

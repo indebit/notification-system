@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use App\Enums\NotificationChannel;
 use App\Enums\NotificationPriority;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -17,6 +18,9 @@ class BatchNotificationRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
@@ -34,7 +38,10 @@ class BatchNotificationRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $notifications = collect($this->input('notifications', []))
+        $raw = $this->input('notifications', []);
+        $items = is_array($raw) ? $raw : [];
+
+        $notifications = collect($items)
             ->map(function (array $notification): array {
                 if (! array_key_exists('priority', $notification)) {
                     $notification['priority'] = NotificationPriority::Normal->value;
@@ -74,6 +81,9 @@ class BatchNotificationRequest extends FormRequest
     }
 
     // Check if both content and template_name are not present when template_variables are present
+    /**
+     * @return array<int, callable(Validator): void>
+     */
     public function after(): array
     {
         return [

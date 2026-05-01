@@ -24,6 +24,9 @@ class NotificationStatusChanged implements ShouldBroadcast
         public NotificationStatus $newStatus,
     ) {}
 
+    /**
+     * @return array<int, Channel>
+     */
     public function broadcastOn(): array
     {
         $target = $this->notification->batch_id ?? $this->notification->id;

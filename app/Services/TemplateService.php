@@ -10,6 +10,9 @@ use RuntimeException;
 
 class TemplateService
 {
+    /**
+     * @param  array<string, mixed>  $variables
+     */
     public function render(string $templateName, array $variables, NotificationChannel $channel): string
     {
         $template = NotificationTemplate::query()

@@ -19,6 +19,9 @@ class NotificationService
 {
     public function __construct(private TemplateService $templateService) {}
 
+    /**
+     * @param  array<string, mixed>  $notificationValidatedData
+     */
     public function create(array $notificationValidatedData): Notification
     {
         $idempotencyKey = $notificationValidatedData['idempotency_key'] ?? null;
@@ -39,10 +42,15 @@ class NotificationService
             );
         }
 
+        $priority = $notificationValidatedData['priority'] ?? NotificationPriority::Normal->value;
+        $priorityEnum = $priority instanceof NotificationPriority
+            ? $priority
+            : NotificationPriority::from((string) $priority);
+
         $notification = Notification::create([
             ...$notificationValidatedData,
             'status' => NotificationStatus::Pending,
-            'priority' => $notificationValidatedData['priority'] ?? NotificationPriority::Normal,
+            'priority' => $priorityEnum,
         ]);
 
         if ($notification->scheduled_at === null) {
@@ -59,6 +67,7 @@ class NotificationService
     public function createBatch(array $notifications): array
     {
         $batchId = Str::uuid()->toString();
+        /** @var Collection<int, Notification> $createdNotifications */
         $createdNotifications = new Collection;
 
         foreach ($notifications as $data) {
@@ -91,6 +100,10 @@ class NotificationService
         return $notification->fresh() ?? $notification;
     }
 
+    /**
+     * @param  array<string, mixed>  $filters
+     * @return LengthAwarePaginator<int, Notification>
+     */
     public function list(array $filters, int $perPage = 15): LengthAwarePaginator
     {
         $from = isset($filters['from']) ? Carbon::parse((string) $filters['from']) : null;
