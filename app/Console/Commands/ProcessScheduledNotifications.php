@@ -26,13 +26,14 @@ class ProcessScheduledNotifications extends Command
             ->whereNotNull('scheduled_at')
             ->where('scheduled_at', '<=', now())
             ->orderBy('scheduled_at')
-            ->chunk(100, function ($notifications) use (&$dispatched): void {
+            ->chunkById(100, function ($notifications) use (&$dispatched): void {
                 foreach ($notifications as $notification) {
                     Log::info('Processing scheduled notification.', [
                         'notification_id' => $notification->id,
                         'scheduled_at' => $notification->scheduled_at,
                     ]);
                     SendNotificationJob::dispatch($notification)->onQueue($this->queueName($notification->priority));
+                    $notification->forceFill(['scheduled_at' => null])->saveQuietly();
                     $dispatched++;
                 }
             });

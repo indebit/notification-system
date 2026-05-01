@@ -11,14 +11,27 @@ use RuntimeException;
 class TemplateService
 {
     /**
+     * In-request cache keyed by name|channel to avoid repeated DB hits during batch creates.
+     *
+     * @var array<string, NotificationTemplate|null>
+     */
+    private array $templateCache = [];
+
+    /**
      * @param  array<string, mixed>  $variables
      */
     public function render(string $templateName, array $variables, NotificationChannel $channel): string
     {
-        $template = NotificationTemplate::query()
-            ->where('name', $templateName)
-            ->where('channel', $channel->value)
-            ->first();
+        $cacheKey = $templateName.'|'.$channel->value;
+        if (array_key_exists($cacheKey, $this->templateCache)) {
+            $template = $this->templateCache[$cacheKey];
+        } else {
+            $template = NotificationTemplate::query()
+                ->where('name', $templateName)
+                ->where('channel', $channel->value)
+                ->first();
+            $this->templateCache[$cacheKey] = $template;
+        }
 
         if (! $template instanceof NotificationTemplate) {
             throw new RuntimeException("Template [{$templateName}] not found for channel [{$channel->value}].");

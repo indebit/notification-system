@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('error_message')->nullable();
             $table->unsignedInteger('latency_ms');
             $table->timestamp('created_at')->useCurrent();
+            $table->index('created_at');
         });
     }
 

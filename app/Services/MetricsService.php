@@ -143,17 +143,7 @@ class MetricsService
             ->groupBy('notifications.channel')
             ->pluck('avg_latency', 'notifications.channel');
 
-        $p95 = DB::table('notification_logs')
-            ->where('created_at', '>=', $from)
-            ->orderBy('latency_ms')
-            ->pluck('latency_ms')
-            ->values();
-
-        $p95Value = 0;
-        if ($p95->isNotEmpty()) {
-            $index = (int) ceil($p95->count() * 0.95) - 1;
-            $p95Value = (int) $p95[max(0, $index)];
-        }
+        $p95Value = $this->latencyP95Ms($from);
 
         return [
             'average_ms' => $averageMs,
@@ -180,5 +170,22 @@ class MetricsService
             'per_minute' => round($processed / $windowMinutes, 2),
             'window_minutes' => $windowMinutes,
         ];
+    }
+
+    /**
+     * Approximate 95th percentile latency without loading all rows into memory.
+     */
+    private function latencyP95Ms(Carbon $from): int
+    {
+        $base = NotificationLog::query()->where('created_at', '>=', $from);
+        $count = (clone $base)->count();
+        if ($count === 0) {
+            return 0;
+        }
+
+        $offset = max(0, (int) ceil($count * 0.95) - 1);
+        $value = (clone $base)->orderBy('latency_ms')->skip($offset)->value('latency_ms');
+
+        return (int) ($value ?? 0);
     }
 }
