@@ -755,7 +755,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"recipient\": \"+905551234567\",\n    \"channel\": \"sms\",\n    \"template_name\": \"order_confirmed\",\n    \"template_variables\": {\n        \"name\": \"Catalin\"\n    },\n    \"priority\": \"normal\"\n}"
+              "raw": "{\n    \"recipient\": \"+40745123456\",\n    \"channel\": \"sms\",\n    \"template_name\": \"order_confirmed\",\n    \"template_variables\": {\n        \"name\": \"Catalin\"\n    },\n    \"priority\": \"normal\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/notifications",
@@ -824,7 +824,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"recipient\": \"+905551234567\",\n    \"channel\": \"telegram\",\n    \"content\": \"Test message\"\n}"
+              "raw": "{\n    \"recipient\": \"+40745123456\",\n    \"channel\": \"telegram\",\n    \"content\": \"Test message\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/notifications",
@@ -856,7 +856,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"recipient\": \"+905551234567\",\n    \"channel\": \"sms\",\n    \"content\": \"Test message\",\n    \"priority\": \"urgent\"\n}"
+              "raw": "{\n    \"recipient\": \"+40745123456\",\n    \"channel\": \"sms\",\n    \"content\": \"Test message\",\n    \"priority\": \"urgent\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/notifications",
@@ -888,7 +888,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"recipient\": \"+905551234567\",\n    \"channel\": \"sms\",\n    \"content\": \"This is a very long SMS message that exceeds the 160 character limit for SMS notifications. We are adding more and more text here to make absolutely sure that this message goes well beyond the maximum allowed length for an SMS channel notification.\",\n    \"priority\": \"normal\"\n}"
+              "raw": "{\n    \"recipient\": \"+40745123456\",\n    \"channel\": \"sms\",\n    \"content\": \"This is a very long SMS message that exceeds the 160 character limit for SMS notifications. We are adding more and more text here to make absolutely sure that this message goes well beyond the maximum allowed length for an SMS channel notification.\",\n    \"priority\": \"normal\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/notifications",

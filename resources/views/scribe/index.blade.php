@@ -296,18 +296,13 @@ is provided and matches an existing notification, the existing one is returned.<
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"recipient\": \"+905551234567\",
+    \"recipient\": \"+40745123456\",
     \"channel\": \"sms\",
     \"content\": \"Your order has shipped!\",
     \"priority\": \"high\",
-    \"idempotency_key\": \"order-123-shipped\",
-    \"scheduled_at\": \"2026-04-30T09:30:00+00:00\",
-    \"template_name\": \"order_shipped\",
-    \"template_variables\": {
-        \"name\": \"Alex\",
-        \"order_id\": \"A-1001\",
-        \"tracking_url\": \"https:\\/\\/track.example.com\\/123\"
-    }
+    \"idempotency_key\": \"n\",
+    \"scheduled_at\": \"2052-05-25\",
+    \"template_name\": \"architecto\"
 }"
 </code></pre></div>
 
@@ -323,18 +318,13 @@ const headers = {
 };
 
 let body = {
-    "recipient": "+905551234567",
+    "recipient": "+40745123456",
     "channel": "sms",
     "content": "Your order has shipped!",
     "priority": "high",
-    "idempotency_key": "order-123-shipped",
-    "scheduled_at": "2026-04-30T09:30:00+00:00",
-    "template_name": "order_shipped",
-    "template_variables": {
-        "name": "Alex",
-        "order_id": "A-1001",
-        "tracking_url": "https:\/\/track.example.com\/123"
-    }
+    "idempotency_key": "n",
+    "scheduled_at": "2052-05-25",
+    "template_name": "architecto"
 };
 
 fetch(url, {
@@ -356,7 +346,7 @@ fetch(url, {
         &quot;id&quot;: &quot;uuid&quot;,
         &quot;batch_id&quot;: null,
         &quot;channel&quot;: &quot;sms&quot;,
-        &quot;recipient&quot;: &quot;+905551234567&quot;,
+        &quot;recipient&quot;: &quot;+40745123456&quot;,
         &quot;content&quot;: &quot;Your order has shipped!&quot;,
         &quot;priority&quot;: &quot;high&quot;,
         &quot;status&quot;: &quot;pending&quot;,
@@ -452,10 +442,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="recipient"                data-endpoint="POSTapi-notifications"
-               value="+905551234567"
+               value="+40745123456"
                data-component="body">
     <br>
-<p>The notification recipient (phone, email, or device token). Example: <code>+905551234567</code></p>
+<p>The notification recipient (phone, email, or device token). Example: <code>+40745123456</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;
@@ -500,10 +490,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="idempotency_key"                data-endpoint="POSTapi-notifications"
-               value="order-123-shipped"
+               value="n"
                data-component="body">
     <br>
-<p>Optional key to prevent duplicate sends. Example: <code>order-123-shipped</code></p>
+<p>Must not be greater than 100 characters. Example: <code>n</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>scheduled_at</code></b>&nbsp;&nbsp;
@@ -512,10 +502,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="scheduled_at"                data-endpoint="POSTapi-notifications"
-               value="2026-04-30T09:30:00+00:00"
+               value="2052-05-25"
                data-component="body">
     <br>
-<p>Optional ISO 8601 date/time for delayed processing. Example: <code>2026-04-30T09:30:00+00:00</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>now</code>. Example: <code>2052-05-25</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>template_name</code></b>&nbsp;&nbsp;
@@ -524,10 +514,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="template_name"                data-endpoint="POSTapi-notifications"
-               value="order_shipped"
+               value="architecto"
                data-component="body">
     <br>
-<p>Optional template name to render content from. Example: <code>order_shipped</code></p>
+<p>The <code>name</code> of an existing record in the notification_templates table. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>template_variables</code></b>&nbsp;&nbsp;
@@ -539,7 +529,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional template variables used with template_name.</p>
+<p>This field is required when <code>template_name</code> is present.</p>
         </div>
         </form>
 
@@ -760,10 +750,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="notifications.0.idempotency_key"                data-endpoint="POSTapi-notifications-batch"
-               value="campaign-2026-001"
+               value="n"
                data-component="body">
     <br>
-<p>Optional idempotency key per item. Example: <code>campaign-2026-001</code></p>
+<p>Must not be greater than 100 characters. Example: <code>n</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>scheduled_at</code></b>&nbsp;&nbsp;
@@ -772,10 +762,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="notifications.0.scheduled_at"                data-endpoint="POSTapi-notifications-batch"
-               value="2026-04-30T09:30:00+00:00"
+               value="2052-05-25"
                data-component="body">
     <br>
-<p>Optional ISO 8601 date/time for delayed processing. Example: <code>2026-04-30T09:30:00+00:00</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>now</code>. Example: <code>2052-05-25</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>template_name</code></b>&nbsp;&nbsp;
@@ -784,10 +774,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="notifications.0.template_name"                data-endpoint="POSTapi-notifications-batch"
-               value="flash_sale"
+               value="architecto"
                data-component="body">
     <br>
-<p>Optional template name to render content from. Example: <code>flash_sale</code></p>
+<p>The <code>name</code> of an existing record in the notification_templates table. Example: <code>architecto</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>template_variables</code></b>&nbsp;&nbsp;
@@ -799,7 +789,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional template variables for template_name.</p>
+
                     </div>
                                     </details>
         </div>
@@ -825,7 +815,7 @@ date range, and batch ID.</p>
     --data "{
     \"status\": \"architecto\",
     \"channel\": \"architecto\",
-    \"from\": \"2026-05-01T12:44:45\",
+    \"from\": \"2026-05-01T13:18:20\",
     \"to\": \"2052-05-24\",
     \"per_page\": 22,
     \"batch_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\"
@@ -857,7 +847,7 @@ const headers = {
 let body = {
     "status": "architecto",
     "channel": "architecto",
-    "from": "2026-05-01T12:44:45",
+    "from": "2026-05-01T13:18:20",
     "to": "2052-05-24",
     "per_page": 22,
     "batch_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
@@ -882,7 +872,7 @@ fetch(url, {
         {
             &quot;id&quot;: &quot;uuid&quot;,
             &quot;channel&quot;: &quot;sms&quot;,
-            &quot;recipient&quot;: &quot;+905551234567&quot;,
+            &quot;recipient&quot;: &quot;+40745123456&quot;,
             &quot;content&quot;: &quot;Your order has shipped!&quot;,
             &quot;priority&quot;: &quot;high&quot;,
             &quot;status&quot;: &quot;pending&quot;,
@@ -1088,10 +1078,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="from"                data-endpoint="GETapi-notifications"
-               value="2026-05-01T12:44:45"
+               value="2026-05-01T13:18:20"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-01T12:44:45</code></p>
+<p>Must be a valid date. Example: <code>2026-05-01T13:18:20</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
@@ -1345,7 +1335,7 @@ fetch(url, {
         &quot;id&quot;: &quot;uuid&quot;,
         &quot;batch_id&quot;: null,
         &quot;channel&quot;: &quot;sms&quot;,
-        &quot;recipient&quot;: &quot;+905551234567&quot;,
+        &quot;recipient&quot;: &quot;+40745123456&quot;,
         &quot;content&quot;: &quot;Your order has shipped!&quot;,
         &quot;priority&quot;: &quot;high&quot;,
         &quot;status&quot;: &quot;delivered&quot;,
@@ -1983,7 +1973,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"order_shipped\",
     \"channel\": \"sms\",
-    \"body\": \"Hi {{name}}, your order {{order_id}} has shipped!\"
+    \"body\": \"Hi @{{name}}, your order {{order_id}} has shipped!\"
 }"
 </code></pre></div>
 
@@ -2001,7 +1991,7 @@ const headers = {
 let body = {
     "name": "order_shipped",
     "channel": "sms",
-    "body": "Hi {{name}}, your order {{order_id}} has shipped!"
+    "body": "Hi @{{name}}, your order {{order_id}} has shipped!"
 };
 
 fetch(url, {
@@ -2133,10 +2123,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="body"                data-endpoint="POSTapi-templates"
-               value="Hi {{name}}, your order {{order_id}} has shipped!"
+               value="Hi @{{name}}, your order {{order_id}} has shipped!"
                data-component="body">
     <br>
-<p>Template body with placeholders. Example: <code>Hi {{name}}, your order {{order_id}} has shipped!</code></p>
+<p>Template body with placeholders. Example: <code>Hi @{{name}}, your order {{order_id}} has shipped!</code></p>
         </div>
         </form>
 
@@ -2186,7 +2176,7 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-x-correlation-id: 881e26f6-7ce2-45c9-ac00-d4d10b9bd301
+x-correlation-id: c9c238e7-d10f-4f40-b805-6015cffdbed7
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -2374,7 +2364,7 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-x-correlation-id: 2b4761ff-3be6-4fa8-8562-70e43851147f
+x-correlation-id: e1854035-23ae-46e2-b2e1-afd95b2cac12
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 

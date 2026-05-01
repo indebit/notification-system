@@ -28,7 +28,7 @@ beforeEach(function (): void {
 function notificationPayload(array $overrides = []): array
 {
     return array_merge([
-        'recipient' => '+905551234567',
+        'recipient' => '+40745123456',
         'channel' => 'sms',
         'content' => 'Test notification content',
         'priority' => 'normal',

@@ -50,16 +50,12 @@ class NotificationController extends Controller
      *
      * @group Notifications
      *
-     * @bodyParam recipient string required The notification recipient (phone, email, or device token). Example: +905551234567
+     * @bodyParam recipient string required The notification recipient (phone, email, or device token). Example: +40745123456
      * @bodyParam channel string required The delivery channel. Example: sms
      * @bodyParam content string required The message content. Example: Your order has shipped!
      * @bodyParam priority string The priority level. Defaults to normal. Example: high
-     * @bodyParam idempotency_key string Optional key to prevent duplicate sends. Example: order-123-shipped
-     * @bodyParam scheduled_at string Optional ISO 8601 date/time for delayed processing. Example: 2026-04-30T09:30:00+00:00
-     * @bodyParam template_name string Optional template name to render content from. Example: order_shipped
-     * @bodyParam template_variables object Optional template variables used with template_name. Example: {"name":"Alex","order_id":"A-1001","tracking_url":"https://track.example.com/123"}
      *
-     * @response 201 scenario="Notification created" {"data":{"id":"uuid","batch_id":null,"channel":"sms","recipient":"+905551234567","content":"Your order has shipped!","priority":"high","status":"pending","idempotency_key":"order-123-shipped","processing_started_at":null,"delivered_at":null,"failed_at":null,"attempt_count":0,"last_error":null,"external_message_id":null,"created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:00.000000Z"}}
+     * @response 201 scenario="Notification created" {"data":{"id":"uuid","batch_id":null,"channel":"sms","recipient":"+40745123456","content":"Your order has shipped!","priority":"high","status":"pending","idempotency_key":"order-123-shipped","processing_started_at":null,"delivered_at":null,"failed_at":null,"attempt_count":0,"last_error":null,"external_message_id":null,"created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:00.000000Z"}}
      */
     public function store(StoreNotificationRequest $request): JsonResponse
     {
@@ -83,10 +79,6 @@ class NotificationController extends Controller
      * @bodyParam notifications[].channel string required Delivery channel for each notification. Example: email
      * @bodyParam notifications[].content string required Message content. Example: Flash sale starts now!
      * @bodyParam notifications[].priority string Optional priority. Defaults to normal. Example: low
-     * @bodyParam notifications[].idempotency_key string Optional idempotency key per item. Example: campaign-2026-001
-     * @bodyParam notifications[].scheduled_at string Optional ISO 8601 date/time for delayed processing. Example: 2026-04-30T09:30:00+00:00
-     * @bodyParam notifications[].template_name string Optional template name to render content from. Example: flash_sale
-     * @bodyParam notifications[].template_variables object Optional template variables for template_name. Example: {"discount":"30","product_name":"Headphones","hours":"2"}
      *
      * @response 201 scenario="Batch created" {"batch_id":"uuid","notifications":[{"id":"uuid","batch_id":"uuid","channel":"email","recipient":"user@example.com","content":"Flash sale starts now!","priority":"normal","status":"pending","idempotency_key":null,"processing_started_at":null,"delivered_at":null,"failed_at":null,"attempt_count":0,"last_error":null,"external_message_id":null,"created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:00.000000Z"}]}
      */
@@ -107,9 +99,7 @@ class NotificationController extends Controller
      *
      * @group Notifications
      *
-     * @urlParam notification string required Notification UUID. Example: 019dd969-1008-7336-b2e4-00b27e14aa0a
-     *
-     * @response 200 scenario="Notification found" {"data":{"id":"uuid","batch_id":null,"channel":"sms","recipient":"+905551234567","content":"Your order has shipped!","priority":"high","status":"delivered","idempotency_key":"order-123-shipped","processing_started_at":"2026-04-29T10:00:01.000000Z","delivered_at":"2026-04-29T10:00:02.000000Z","failed_at":null,"attempt_count":1,"last_error":null,"external_message_id":"provider-msg-123","created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:02.000000Z","logs":[{"id":1,"notification_id":"uuid","attempt_number":1,"status":"accepted","response_body":{"status":"accepted"},"error_message":null,"latency_ms":120,"created_at":"2026-04-29T10:00:02.000000Z"}]}}
+     * @response 200 scenario="Notification found" {"data":{"id":"uuid","batch_id":null,"channel":"sms","recipient":"+40745123456","content":"Your order has shipped!","priority":"high","status":"delivered","idempotency_key":"order-123-shipped","processing_started_at":"2026-04-29T10:00:01.000000Z","delivered_at":"2026-04-29T10:00:02.000000Z","failed_at":null,"attempt_count":1,"last_error":null,"external_message_id":"provider-msg-123","created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:02.000000Z","logs":[{"id":1,"notification_id":"uuid","attempt_number":1,"status":"accepted","response_body":{"status":"accepted"},"error_message":null,"latency_ms":120,"created_at":"2026-04-29T10:00:02.000000Z"}]}}
      */
     public function show(Notification $notification): NotificationResource
     {
@@ -146,8 +136,6 @@ class NotificationController extends Controller
      *
      * @group Notifications
      *
-     * @urlParam notification string required Notification UUID. Example: 019dd969-1008-7336-b2e4-00b27e14aa0a
-     *
      * @response 200 {"data":{"id":"uuid","status":"cancelled","updated_at":"2026-04-29T10:15:00.000000Z"}}
      * @response 422 {"message":"The given data was invalid.","errors":{"notification":["Only pending notifications can be cancelled."]}}
      */
@@ -173,7 +161,7 @@ class NotificationController extends Controller
      * @queryParam per_page integer Page size (1-100). Example: 15
      * @queryParam batch_id string Filter by batch UUID. Example: d2c68f90-76d8-4c8e-9ad7-0f8b4a4cb9fe
      *
-     * @response 200 {"data":[{"id":"uuid","channel":"sms","recipient":"+905551234567","content":"Your order has shipped!","priority":"high","status":"pending","created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:00.000000Z"}],"links":{"first":"http://localhost:8000/api/notifications?page=1","last":"http://localhost:8000/api/notifications?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"path":"http://localhost:8000/api/notifications","per_page":15,"to":1,"total":1}}
+     * @response 200 {"data":[{"id":"uuid","channel":"sms","recipient":"+40745123456","content":"Your order has shipped!","priority":"high","status":"pending","created_at":"2026-04-29T10:00:00.000000Z","updated_at":"2026-04-29T10:00:00.000000Z"}],"links":{"first":"http://localhost:8000/api/notifications?page=1","last":"http://localhost:8000/api/notifications?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"path":"http://localhost:8000/api/notifications","per_page":15,"to":1,"total":1}}
      */
     public function index(ListNotificationsRequest $request): NotificationCollection
     {

@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui-bundle.min.js"></script>
     <script>
         SwaggerUIBundle({
-            url: '/openapi.yaml',
+            url: '/scribe/openapi.yaml',
             dom_id: '#swagger-ui',
             presets: [SwaggerUIBundle.presets.apis],
             layout: 'BaseLayout',
