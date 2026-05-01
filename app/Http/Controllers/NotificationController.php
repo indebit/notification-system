@@ -21,7 +21,16 @@ class NotificationController extends Controller
     public function __construct(public NotificationService $notificationService) {}
 
     /**
-     * Debug-only: trigger a sample NotificationStatusChanged broadcast (see README).
+     * Trigger a WebSocket test broadcast
+     *
+     * Debug-only helper endpoint that broadcasts a sample `NotificationStatusChanged`
+     * event for the latest notification. Use this to verify Reverb/Echo subscriptions
+     * without waiting for a real provider callback.
+     *
+     * @group Websocket Testing
+     *
+     * @response 200 {"message":"Broadcast sent","notification":{"id":"uuid","status":"pending"}}
+     * @response 404 {"message":"No notifications found"}
      */
     public function testBroadcast(): JsonResponse
     {

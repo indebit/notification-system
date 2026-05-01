@@ -75,6 +75,22 @@ Full request and response examples live in the interactive docs at `/docs` and i
 | GET | `/api/templates` | Paginated template list |
 | GET | `/api/templates/{template}` | Fetch one template |
 
+### WebSocket testing
+
+Use these endpoints/pages to validate Reverb broadcasting and client subscriptions during local development.
+
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | `/websocket-test` | Manual browser test page for connecting/subscribing to Reverb channels |
+| POST | `/api/test/broadcast` | Debug API endpoint that emits a sample `NotificationStatusChanged` event for the latest notification |
+
+Suggested local test flow:
+
+1. Open `http://localhost:8000/websocket-test` in one tab and connect to your target channel (`notifications.{notification_id}` or `notifications.{batch_id}`).
+2. Create a notification via `POST /api/notifications` so at least one notification exists.
+3. Call `POST /api/test/broadcast` from `/docs` (or curl/Postman).
+4. Confirm the event appears in the test page/WebSocket client log.
+
 ## Architecture decisions
 
 The codebase stays in default Laravel folders with controllers, form requests, jobs, and Eloquent models. The problem is a single bounded context (notify, deliver, observe), so a heavier DDD layout would add friction without buying much separation.
